@@ -116,30 +116,30 @@
                 <button id="btn-start-recording">Start Recording</button>
                 <button id="btn-pause-recording" style="display: none; font-size: 15px;">Pause</button>
 
-                <div style="display: inline-block;">
+               <!-- <div style="display: inline-block;">
                     <input type="checkbox" id="chk-fixSeeking" style="margin:0;width:auto;" title="Fix video seeking issues?">
                     <label for="chk-fixSeeking" style="font-size: 15px;margin:0;width: auto;cursor: pointer;-webkit-user-select:none;user-select:none;" title="Fix video seeking issues?">Fix Seeking Issues?</label>
-                </div>
+                </div>-->
 
                 <hr style="border-top: 0;border-bottom: 1px solid rgb(189, 189, 189);margin: 4px -12px;margin-top: 8px;">
-                <select class="media-resolutions">
+                <!--<select class="media-resolutions">
                     <option value="default">Default resolutions</option>
                     <option value="1920x1080">1080p</option>
                     <option value="1280x720">720p</option>
                     <option value="640x480">480p</option>
                     <option value="3840x2160">4K Ultra HD (3840x2160)</option>
-                </select>
+                </select>-->
 
-                <select class="media-framerates">
+               <!-- <select class="media-framerates">
                     <option value="default">Default framerates</option>
                     <option value="5">5 fps</option>
                     <option value="15">15 fps</option>
                     <option value="24">24 fps</option>
                     <option value="30">30 fps</option>
                     <option value="60">60 fps</option>
-                </select>
+                </select>-->
 
-                <select class="media-bitrates">
+                <!--<select class="media-bitrates">
                     <option value="default">Default bitrates</option>
                     <option value="8000000000">1 GB bps</option>
                     <option value="800000000">100 MB bps</option>
@@ -147,7 +147,7 @@
                     <option value="800000">100 KB bps</option>
                     <option value="8000">1 KB bps</option>
                     <option value="800">100 Bytes bps</option>
-                </select>
+                </select>-->
             </h2>
 
             <div style="text-align: center; display: none;">
@@ -236,8 +236,7 @@
             
             var recordingPlayer = mediaElement.media;
             var recordingMedia = document.querySelector('.recording-media');
-            var mediaContainerFormat = 'default';
-            
+            var mediaContainerFormat = 'WebAssembly';
             var mimeType = 'video/webm';
             var fileExtension = 'webm';
             var type = 'video';
@@ -661,8 +660,8 @@
             }
             var videoBitsPerSecond;
             function setVideoBitrates() {
-                var select = document.querySelector('.media-bitrates');
-                var value = select.value;
+                //var select = document.querySelector('.media-bitrates');
+                var value = 'default';
                 if(value == 'default') {
                     videoBitsPerSecond = null;
                     return;
@@ -673,8 +672,8 @@
                 if(!mediaConstraints.video) {
                     return mediaConstraints;
                 }
-                var select = document.querySelector('.media-framerates');
-                var value = select.value;
+                //var select = document.querySelector('.media-framerates');
+                var value = 'default';
                 if(value == 'default') {
                     return mediaConstraints;
                 }
@@ -712,13 +711,13 @@
                     document.querySelector(selector).addEventListener(event, callback, false);
                 });
             }
-            setGetFromLocalStorage(['.media-resolutions', '.media-framerates', '.media-bitrates', '.recording-media', 'default']);
+            setGetFromLocalStorage(['.media-resolutions', '.media-framerates', '.media-bitrates', '.recording-media', '.media-container-format']);
             function getVideoResolutions(mediaConstraints) {
                 if(!mediaConstraints.video) {
                     return mediaConstraints;
                 }
-                var select = document.querySelector('.media-resolutions');
-                var value = select.value;
+                //var select = document.querySelector('.media-resolutions');
+                var value = 'default';
                 if(value == 'default') {
                     return mediaConstraints;
                 }
@@ -783,7 +782,7 @@
                 );
                 var localStorageItem;
                 if(localStorage.getItem('media-container-format')) {
-                    localStorageItem = 'default';
+                    localStorageItem = localStorage.getItem('media-container-format');
                 }
                 var selectedItem;
                 options.forEach(function(option) {
@@ -1547,24 +1546,23 @@
             };
         </script>
 
-      <script>
-            var chkFixSeeking = document.querySelector('#chk-fixSeeking');
-            chkFixSeeking.onchange = function() {
-                if(this.checked === true) {
+        <script>
+            var chkFixSeeking = true;
+            
+                if(chkFixSeeking === true) {
                     localStorage.setItem(this.id, 'true');
                 }
                 else {
                     localStorage.removeItem(this.id);
                 }
-            };
+            
             if(localStorage.getItem(chkFixSeeking.id) === 'true') {
-                chkFixSeeking.checked = true;
+                chkFixSeeking = true;
             }
         </script>
 
-       <script>
+        <script>
             var chkTimeSlice = document.querySelector('#chk-timeSlice');
-           console.log('llllllllll',chkTimeSlice);
             var timeSlice = false;
             if(typeof MediaRecorder === 'undefined') {
                 chkTimeSlice.disabled = true;
@@ -1583,7 +1581,7 @@
                     timeSlice = false;
                 }
             }, false);
-        </script>-->
+        </script>
 
         <script>
             var btnPauseRecording = document.querySelector('#btn-pause-recording');
@@ -1623,14 +1621,3 @@
         </script>
 
         
-    
-
-    <!-- commits.js is useless for you! -->
-    <script>
-        window.useThisGithubPath = 'muaz-khan/RecordRTC';
-    </script>
-    
-    <script src="https://apis.google.com/js/client:plusone.js"></script>
-</body>
-
-</html>
