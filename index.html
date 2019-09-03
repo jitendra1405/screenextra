@@ -94,7 +94,7 @@
 
                 
 
-                <select class="media-container-format">
+               <!-- <select class="media-container-format">
                     <option>default</option>
                     <option>vp8</option>
                     <option>vp9</option>
@@ -106,7 +106,7 @@
                     <option>gif</option>
                     <option>whammy</option>
                     <option>WebAssembly</option>
-                </select>
+                </select>-->
 
                 <input type="checkbox" id="chk-timeSlice" style="margin:0;width:auto;" title="Use intervals based recording">
                 <label for="chk-timeSlice" style="font-size: 15px;margin:0;width: auto;cursor: pointer;-webkit-user-select:none;user-select:none;" title="Use intervals based recording">Use timeSlice?</label>
@@ -236,7 +236,8 @@
             
             var recordingPlayer = mediaElement.media;
             var recordingMedia = document.querySelector('.recording-media');
-            var mediaContainerFormat = document.querySelector('.media-container-format');
+            var mediaContainerFormat = 'default';
+            
             var mimeType = 'video/webm';
             var fileExtension = 'webm';
             var type = 'video';
@@ -711,7 +712,7 @@
                     document.querySelector(selector).addEventListener(event, callback, false);
                 });
             }
-            setGetFromLocalStorage(['.media-resolutions', '.media-framerates', '.media-bitrates', '.recording-media', '.media-container-format']);
+            setGetFromLocalStorage(['.media-resolutions', '.media-framerates', '.media-bitrates', '.recording-media', 'default']);
             function getVideoResolutions(mediaConstraints) {
                 if(!mediaConstraints.video) {
                     return mediaConstraints;
@@ -782,7 +783,7 @@
                 );
                 var localStorageItem;
                 if(localStorage.getItem('media-container-format')) {
-                    localStorageItem = localStorage.getItem('media-container-format');
+                    localStorageItem = 'default';
                 }
                 var selectedItem;
                 options.forEach(function(option) {
