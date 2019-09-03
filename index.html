@@ -1562,25 +1562,15 @@
         </script>
 
         <script>
-            var chkTimeSlice = document.querySelector('#chk-timeSlice');
+            var chkTimeSlice = true;
             var timeSlice = false;
-            if(typeof MediaRecorder === 'undefined') {
-                chkTimeSlice.disabled = true;
-            }
-            chkTimeSlice.addEventListener('change', function() {
-                if(chkTimeSlice.checked === true) {
+            
+            
                     var _timeSlice = prompt('Please enter timeSlice in milliseconds e.g. 1000 or 2000 or 3000.', 1000);
                     _timeSlice = parseInt(_timeSlice);
-                    if(!_timeSlice || _timeSlice == NaN || typeof _timeSlice === 'undefined') {
-                        timeSlice = false;
-                        return;
-                    }
+                    
                     timeSlice = _timeSlice;
-                }
-                else {
-                    timeSlice = false;
-                }
-            }, false);
+               
         </script>
 
         <script>
