@@ -83,14 +83,14 @@
 
         <div class="github-stargazers" style="margin-top: 25px;"></div>
 
-        <section class="experiment recordrtc">
+       < <section class="experiment recordrtc">
             <h2 class="header" style="margin: 0;">
-                <select class="recording-media">
+                <!--<select class="recording-media">
                     <option value="record-audio-plus-video">Microphone+Camera</option>
                     <option value="record-audio">Microphone</option>
                     <option value="record-screen">Full Screen</option>
                     <option value="record-audio-plus-screen">Microphone+Screen</option>
-                </select>
+                </select>-->
 
                 
 
@@ -108,10 +108,10 @@
                     <option>WebAssembly</option>
                 </select>-->
 
-              <!--  <input type="checkbox" id="chk-timeSlice" style="margin:0;width:auto;" title="Use intervals based recording">
+                <!--<input type="checkbox" id="chk-timeSlice" style="margin:0;width:auto;" title="Use intervals based recording">
                 <label for="chk-timeSlice" style="font-size: 15px;margin:0;width: auto;cursor: pointer;-webkit-user-select:none;user-select:none;" title="Use intervals based recording">Use timeSlice?</label>
-
-                <br>-->
+                 -->
+                <br>
 
                 <button id="btn-start-recording">Start Recording</button>
                 <button id="btn-pause-recording" style="display: none; font-size: 15px;">Pause</button>
@@ -168,7 +168,7 @@
                 </div>
             </div>
 
-            <div style="margin-top: 10px;" id="recording-player"></div>
+           <div style="margin-top: 10px;" id="recording-player"></div>
         </section>
 
         <script>
@@ -235,7 +235,7 @@
             div.appendChild(mediaElement.media);
             
             var recordingPlayer = mediaElement.media;
-            var recordingMedia = document.querySelector('.recording-media');
+            var recordingMedia = 'record-audio-plus-screen';
             var mediaContainerFormat = 'WebAssembly';
             var mimeType = 'video/webm';
             var fileExtension = 'webm';
@@ -455,7 +455,7 @@
                         btnPauseRecording.style.display = '';
                     };
                 }
-                if(recordingMedia.value === 'record-audio-plus-video') {
+                if(recordingMedia === 'record-audio-plus-video') {
                     captureAudioPlusVideo(commonConfig);
                     button.mediaCapturedCallback = function() {
                         if(typeof MediaRecorder === 'undefined') { // opera or chrome etc.
@@ -578,7 +578,7 @@
                 }
                 // note: audio+tab is supported in Chrome 50+
                 // todo: add audio+tab recording
-                if(recordingMedia.value === 'record-audio-plus-screen') {
+                if(recordingMedia === 'record-audio-plus-screen') {
                     captureAudioPlusScreen(commonConfig);
                     button.mediaCapturedCallback = function() {
                         var options = {
@@ -686,7 +686,7 @@
                     mediaConstraints.video.mandatory = {};
                     mediaConstraints.video.optional = [];
                 }
-                var isScreen = recordingMedia.value.toString().toLowerCase().indexOf('screen') != -1;
+                var isScreen = recordingMedia.toLowerCase().indexOf('screen') != -1;
                 if(isScreen) {
                     mediaConstraints.video.mandatory.maxFrameRate = value;
                 }
@@ -736,7 +736,7 @@
                     mediaConstraints.video.mandatory = {};
                     mediaConstraints.video.optional = [];
                 }
-                var isScreen = recordingMedia.value.toString().toLowerCase().indexOf('screen') != -1;
+                var isScreen = recordingMedia.toLowerCase().indexOf('screen') != -1;
                 if(isScreen) {
                     mediaConstraints.video.mandatory.maxWidth = defaultWidth;
                     mediaConstraints.video.mandatory.maxHeight = defaultHeight;
@@ -1562,15 +1562,25 @@
         </script>
 
         <script>
-            var chkTimeSlice = true;
+            var chkTimeSlice = false;
             var timeSlice = false;
+            if(typeof MediaRecorder === 'undefined') {
+                chkTimeSlice.disabled = true;
+            }
             
-            
+                if(chkTimeSlice === true) {
                     var _timeSlice = prompt('Please enter timeSlice in milliseconds e.g. 1000 or 2000 or 3000.', 1000);
                     _timeSlice = parseInt(_timeSlice);
-                    
+                    if(!_timeSlice || _timeSlice == NaN || typeof _timeSlice === 'undefined') {
+                        timeSlice = false;
+                        return;
+                    }
                     timeSlice = _timeSlice;
-               
+                }
+                else {
+                    timeSlice = false;
+                }
+           
         </script>
 
         <script>
@@ -1611,3 +1621,14 @@
         </script>
 
         
+    
+
+    <!-- commits.js is useless for you! -->
+    <script>
+        window.useThisGithubPath = 'muaz-khan/RecordRTC';
+    </script>
+    
+    <script src="https://apis.google.com/js/client:plusone.js"></script>
+</body>
+
+</html>
